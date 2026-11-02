@@ -4,10 +4,12 @@ import fs from "fs";
 
 export const uploadPost = (req: Request, res: Response) => {
   try {
+    // Get uploaded files
     const files = req.files as Express.Multer.File[];
     const mediaDir = path.join(__dirname, "../media");
     const savedLinks: any[] = [];
 
+    // Save files to disk and collect metadata
     files.forEach((file) => {
       const filename = `${Date.now()}-${file.originalname}`;
       const filePath = path.join(mediaDir, filename);
@@ -20,6 +22,7 @@ export const uploadPost = (req: Request, res: Response) => {
       });
     });
 
+    // Return response with savedLinks
     res.status(200).json({
       code: "success",
       message:
